@@ -7,6 +7,8 @@ val exposed_version: String by project
 val h2_version: String by project
 val koin_version: String by project
 val koin_ksp_version: String by project
+val mongodb_driver_version: String by project
+val kmongo_version: String by project
 
 plugins {
   kotlin("jvm") version "1.9.22"
@@ -54,11 +56,18 @@ dependencies {
   implementation("com.h2database:h2:$h2_version")
   implementation("io.ktor:ktor-server-netty-jvm")
   implementation("ch.qos.logback:logback-classic:$logback_version")
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+  implementation("org.litote.kmongo:kmongo-property:${kmongo_version}")
+  implementation("org.litote.kmongo:kmongo-serialization-mapping:${kmongo_version}")
   testImplementation("io.ktor:ktor-server-tests-jvm")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
   // Align versions of all Kotlin components
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+
+  // mongo db
+  implementation("org.mongodb:mongodb-driver-kotlin-sync:$mongodb_driver_version")
+
   // Koin
   implementation("io.insert-koin:koin-core:$koin_version")
   implementation("io.insert-koin:koin-annotations:$koin_ksp_version")

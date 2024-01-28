@@ -7,7 +7,7 @@ import org.slashdev.services.UserService
 /** UserListApplication - Application Class use UserRepository */
 class UserApplication : KoinComponent {
 
-  val userService: UserService by inject()
+  private val userService: UserService by inject()
 
   // display our data
   fun sayHello() {

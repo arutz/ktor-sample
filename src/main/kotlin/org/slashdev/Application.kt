@@ -5,6 +5,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import org.koin.core.context.startKoin
 import org.koin.ksp.generated.module
+import org.slashdev.apps.CommentApplication
 import org.slashdev.apps.UserApplication
 import org.slashdev.plugins.*
 
@@ -15,10 +16,12 @@ fun main() {
 }
 
 fun Application.module() {
-  UserApplication().sayHello()
   configureHTTP()
   configureMonitoring()
-  configureSerialization()
   configureDatabases()
   configureRouting()
+  configureSerialization()
+
+  UserApplication().sayHello()
+  CommentApplication().findComments().forEach { comment -> println(comment) }
 }

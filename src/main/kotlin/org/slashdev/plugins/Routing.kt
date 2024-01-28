@@ -14,14 +14,14 @@ fun Application.configureRouting() {
   install(DoubleReceive)
   install(Resources)
   routing {
-    get("/") {
-      call.respondText("Hello World!")
-    }
+    get("/") { call.respondText("Hello World!") }
+
     post("/double-receive") {
       val first = call.receiveText()
       val theSame = call.receiveText()
       call.respondText(first + " " + theSame)
     }
+
     get<Articles> { article ->
       // Get all articles ...
       call.respond("List of articles sorted starting from ${article.sort}")
@@ -29,6 +29,4 @@ fun Application.configureRouting() {
   }
 }
 
-@Serializable
-@Resource("/articles")
-class Articles(val sort: String? = "new")
+@Serializable @Resource("/articles") class Articles(val sort: String? = "new")
