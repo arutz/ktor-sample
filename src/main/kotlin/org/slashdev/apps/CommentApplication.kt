@@ -2,11 +2,11 @@ package org.slashdev.apps
 
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.slashdev.services.MongoProvider
+import org.slashdev.services.CollectionProvider
 
 open class CommentApplication : KoinComponent {
 
-  private val commentProvider: MongoProvider by inject()
+  private val collectionProvider: CollectionProvider by inject()
 
-  fun findComments() = commentProvider.commentCollection().find().toList()
+  fun findComments() = collectionProvider.commentCollection().find().toList()
 }

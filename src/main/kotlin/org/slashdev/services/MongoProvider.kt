@@ -14,13 +14,14 @@ import org.slashdev.util.DurationCodec
 import org.slashdev.util.TimezoneCodec
 import org.slashdev.util.UUIDCodec
 
-class MongoConfig(
-    var username: String = "root",
-    var password: String = "root",
-    var database: String = "homepage",
-    var host: String = "localhost",
-    var port: Int = 27017,
-)
+@Single
+class MongoConfig {
+  var username: String = "root"
+  var password: String = "root"
+  var database: String = "homepage"
+  var host: String = "localhost"
+  var port: Int = 27017
+}
 
 /**
  * This constant is used for configuring a default mapping service in the context of
@@ -29,9 +30,7 @@ class MongoConfig(
 private const val SYSTEM_PROP_MAPPING_SERVICE_DEFAULT = "org.litote.mongo.mapping.service"
 
 @Single
-class MongoProvider {
-
-  private val mongoConfig = MongoConfig()
+class MongoProvider(private val mongoConfig: MongoConfig) {
 
   private fun mongoClient(): MongoClient = run {
     val connectionString =
@@ -52,7 +51,11 @@ class MongoProvider {
   }
 
   fun mongoDefaultDatabase(): MongoDatabase = mongoClient().getDatabase(mongoConfig.database)
+}
+
+@Single
+class CollectionProvider(private val mongoProvider: MongoProvider) {
 
   fun commentCollection(): MongoCollection<CommentEntity> =
-      mongoDefaultDatabase().getCollection("comments", CommentEntity::class.java)
+      mongoProvider.mongoDefaultDatabase().getCollection("comments", CommentEntity::class.java)
 }
